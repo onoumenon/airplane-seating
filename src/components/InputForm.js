@@ -50,7 +50,7 @@ class InputForm extends Component {
       <div>
         <form
           onSubmit={this.handleSubmit}
-          className="ui error form card black centered"
+          className="ui error form card centered"
         >
           <div className="content">
             <div className="header">Create a Plane</div>
@@ -62,22 +62,24 @@ class InputForm extends Component {
             </div>
           </div>
           <div className="field">
-            <label>Seats (Row, Column)</label>
+            <label htmlFor="seats-input">Seats (Row, Column)</label>
             <input
               value={this.state.seats}
               onChange={this.handleInput}
               type="text"
+              id="seats-input"
               name="seats"
               placeholder="Array: [3,2],[2,2],[3,2]"
               required
             />
           </div>
           <div className="field">
-            <label>No of Passengers</label>
+            <label htmlFor="passengers-input">No of Passengers</label>
             <input
               value={this.state.passengers}
-              type="number"
               onChange={this.handleInput}
+              type="number"
+              id="passengers-input"
               name="passengers"
               placeholder="Number of Passengers"
             />
