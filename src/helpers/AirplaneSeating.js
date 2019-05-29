@@ -1,4 +1,6 @@
-export default class AirplaneSeating {
+import { isValid2dArray, isNonNegativeInteger } from "./ValidationHelper";
+
+export class AirplaneSeating {
   constructor(seats, passengers = 0) {
     this.seats = this._createSeats(seats);
     this.passengers = this._validatePassengers(passengers);
@@ -15,29 +17,8 @@ export default class AirplaneSeating {
     };
   }
 
-  _isNonNegativeInteger(input) {
-    return Number.isInteger(input) && input >= 0;
-  }
-
-  _isValid2dArray(input) {
-    if (
-      !(
-        input.length > 0 &&
-        input.constructor === Array &&
-        input[0][0] &&
-        input[0].constructor === Array
-      )
-    ) {
-      return false;
-    }
-    return input.every(
-      arr =>
-        arr.length === 2 &&
-        arr.every(number => this._isNonNegativeInteger(number))
-    );
-  }
   _validatePassengers(input) {
-    if (!this._isNonNegativeInteger(input)) {
+    if (!isNonNegativeInteger(input)) {
       throw new Error(
         "Invalid passenger input. Must be a non-negative number."
       );
@@ -46,7 +27,7 @@ export default class AirplaneSeating {
   }
 
   _createSeats(input) {
-    if (!this._isValid2dArray(input)) {
+    if (!isValid2dArray(input)) {
       throw new Error("Invalid seat input. Expected 2d array of numbers.");
     }
     const maxColumns = Math.max(...input.map(arr => arr[1]));
