@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 class ShowAirplaneSeats extends Component {
-  isLoading = seatingData => {
+  isLoading = (seatingData, vw) => {
     if (!seatingData) {
       return (
         <div className="ui active dimmer">
@@ -11,6 +11,11 @@ class ShowAirplaneSeats extends Component {
     }
     return (
       <div className="pt">
+        {vw < 620 && (
+          <div className="ui warning message">
+            <div className="header">Switch to horizontal view on mobile.</div>
+          </div>
+        )}
         <h3>FRONT OF PLANE</h3>
         <h2>Remaining Passengers: {seatingData.remainingPassengers}</h2>
         {seatingData.seats.map((row, index) => {
@@ -52,8 +57,9 @@ class ShowAirplaneSeats extends Component {
   };
 
   render() {
-    const { seatingData } = this.props;
-    return <div>{this.isLoading(seatingData)}</div>;
+    const { seatingData, vw } = this.props;
+
+    return <div>{this.isLoading(seatingData, vw)}</div>;
   }
 }
 

@@ -4,7 +4,6 @@ body {
   text-align: center;
   background-color: #1b1f29;
   color: #4978ff;
-  min-width: 700px;
 }
 
 h1 {
@@ -13,10 +12,6 @@ h1 {
 
 .text-align-left {
   text-align: left;
-}
-
-.text-align-right {
-  text-align: right;
 }
 
 .ui.label {
@@ -32,6 +27,12 @@ h1 {
   padding-top: 10em;
 }
 
-.pr-5 {
-  padding-right: 10em;
+.pl-5 {
+  padding-left: 10em;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    min-width: 600px;
+  }
 }

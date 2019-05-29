@@ -8,11 +8,21 @@ import Legend from "./components/Legend";
 
 class App extends Component {
   state = {
-    seatingData: null
+    seatingData: null,
+    vw: null
   };
 
   componentDidMount = () => {
     this.createNewPlane(seats, passengers);
+    window.addEventListener("resize", this.resize);
+    this.resize();
+  };
+
+  resize = () => {
+    let currentWidth = window.innerWidth;
+    if (currentWidth !== this.state.vw) {
+      this.setState({ vw: currentWidth });
+    }
   };
 
   createNewPlane = (seats, passengers) => {
@@ -25,14 +35,17 @@ class App extends Component {
     return (
       <div>
         <h1>Airplane Seating</h1>
-        <ShowAirplaneSeats seatingData={this.state.seatingData} />
+        <ShowAirplaneSeats
+          seatingData={this.state.seatingData}
+          vw={this.state.vw}
+        />
         <div className="pt-5">
           <div className="ui two column container very relaxed stackable grid">
             <div className="column">
-              <InputForm createNewPlane={this.createNewPlane} />
+              <Legend />
             </div>
             <div className="column">
-              <Legend />
+              <InputForm createNewPlane={this.createNewPlane} />
             </div>
           </div>
         </div>

@@ -5,6 +5,8 @@ import { render, fireEvent } from "react-testing-library";
 import InputForm from "./../components/InputForm";
 
 const createNewPlane = jest.fn();
+window.scrollTo = jest.fn();
+
 const message = /Input Error/i;
 
 describe("Input Form", () => {
@@ -32,5 +34,6 @@ describe("Input Form", () => {
     fireEvent.click(getByText("Submit"));
     expect(queryByText(message)).not.toBeInTheDocument();
     expect(createNewPlane).toBeCalled();
+    window.scrollTo.mockClear();
   });
 });

@@ -30,6 +30,7 @@ class InputForm extends Component {
     if (this.formIsValid(seats, passengers)) {
       this.props.createNewPlane(seats, passengers);
     }
+    window.scrollTo(0, 0);
   };
 
   formIsValid(seats, passengers) {

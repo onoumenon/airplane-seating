@@ -2,13 +2,15 @@ import React from "react";
 
 const Legend = () => {
   return (
-    <div className="text-align-right pr-10">
+    <div className="text-align-left pl-5">
       <h2>Legend</h2>
       <div className="pt">
-        Assigned Order: <p className="ui grey circular label">.no</p>
+        <p className="ui grey circular label">.no</p>
+        {"  "}Assigned Order
       </div>
       <div className="pt">
-        Available Seat: <p className="ui yellow circular label">A</p>
+        <p className="ui yellow circular label">A</p>
+        {"  "}Available Seat
       </div>
     </div>
   );
