@@ -3,13 +3,13 @@ import { isValid2dArray, isNonNegativeInteger } from "./ValidationHelper";
 export class AirplaneSeating {
   constructor(seats, passengers = 0) {
     this.seats = this._createSeats(seats);
-    this.passengers = this._validatePassengers(passengers);
+    this.passengers = this._createPassengers(passengers);
     this.remainingPassengers = this.passengers;
     this.assignedSeats = this.seats;
   }
   nextSeatNumber = 1;
 
-  get autoAssignedSeats() {
+  get seatingData() {
     this._assignAllSeats();
     return {
       seats: this.assignedSeats,
@@ -17,7 +17,7 @@ export class AirplaneSeating {
     };
   }
 
-  _validatePassengers(input) {
+  _createPassengers(input) {
     if (!isNonNegativeInteger(input)) {
       throw new Error(
         "Invalid passenger input. Must be a non-negative number."
@@ -52,73 +52,46 @@ export class AirplaneSeating {
     return seats;
   }
 
+  _assignSeatsBy(condition) {
+    let seats = [...this.seats];
+    seats.forEach((row, rowI) => {
+      row.forEach((seat, seatI) => {
+        if (this.remainingPassengers < 1) {
+          return;
+        }
+        if (seat === "seat" && condition(row, seatI)) {
+          seats[rowI][seatI] = this.nextSeatNumber;
+          this.nextSeatNumber++;
+          this.remainingPassengers--;
+        }
+      });
+    });
+    this._assignedSeats = seats;
+  }
+
+  _isAisleSeat(row, seatI) {
+    if (seatI <= 0 || seatI >= row.length - 1) {
+      return false;
+    }
+    return row[seatI - 1] === "aisle" || row[seatI + 1] === "aisle";
+  }
+
+  _isWindowSeat(row, seatI) {
+    return seatI === 0 || seatI === row.length - 1;
+  }
+
+  _isMiddleSeat(row, seatI) {
+    return !(
+      row[seatI - 1] === "aisle" ||
+      row[seatI + 1] === "aisle" ||
+      seatI === 0 ||
+      seatI === row.length - 1
+    );
+  }
+
   _assignAllSeats() {
-    this._assignAisleSeats();
-    this._assignWindowSeats();
-    this._assignMiddleSeats();
-  }
-
-  _assignAisleSeats() {
-    let seats = [...this.seats];
-    seats.forEach((row, rowI) => {
-      row.forEach((seat, seatI) => {
-        if (this.remainingPassengers < 1) {
-          return;
-        }
-        if (seatI > 0 && seatI < row.length) {
-          if (
-            seat === "seat" &&
-            (row[seatI - 1] === "aisle" || row[seatI + 1] === "aisle")
-          ) {
-            seats[rowI][seatI] = this.nextSeatNumber;
-            this.nextSeatNumber++;
-            this.remainingPassengers--;
-          }
-        }
-      });
-    });
-    this._assignedSeats = seats;
-  }
-
-  _assignWindowSeats() {
-    let seats = [...this.seats];
-    seats.forEach((row, rowI) => {
-      row.forEach((seat, seatI) => {
-        if (this.remainingPassengers < 1) {
-          return;
-        }
-        if (seat === "seat" && (seatI === 0 || seatI === row.length - 1)) {
-          seats[rowI][seatI] = this.nextSeatNumber;
-          this.nextSeatNumber++;
-          this.remainingPassengers--;
-        }
-      });
-    });
-    this._assignedSeats = seats;
-  }
-
-  _assignMiddleSeats() {
-    let seats = [...this.seats];
-    seats.forEach((row, rowI) => {
-      row.forEach((seat, seatI) => {
-        if (this.remainingPassengers < 1) {
-          return;
-        }
-        if (
-          seat === "seat" &&
-          !(
-            seatI === 0 ||
-            seatI === row.length - 1 ||
-            row[seatI - 1] === "aisle" ||
-            row[seatI + 1] === "aisle"
-          )
-        ) {
-          seats[rowI][seatI] = this.nextSeatNumber;
-          this.nextSeatNumber++;
-          this.remainingPassengers--;
-        }
-      });
-    });
-    this._assignedSeats = seats;
+    this._assignSeatsBy(this._isAisleSeat);
+    this._assignSeatsBy(this._isWindowSeat);
+    this._assignSeatsBy(this._isMiddleSeat);
   }
 }

@@ -58,7 +58,7 @@ describe("Create seats", () => {
 describe("Assign aisle seats", () => {
   it("should return assigned aisle seats", () => {
     const Airplane = new AirplaneSeating([[3, 1], [2, 2]], 5);
-    Airplane._assignAisleSeats();
+    Airplane._assignSeatsBy(Airplane._isAisleSeat);
     expect(Airplane.assignedSeats).toEqual([
       ["seat", "seat", 1, "aisle", 2, "seat"],
       ["empty", "empty", "empty", "aisle", 3, "seat"]
@@ -66,7 +66,7 @@ describe("Assign aisle seats", () => {
   });
   it("should return assigned aisle seats only for the number of passengers", () => {
     const Airplane = new AirplaneSeating([[2, 1], [2, 1], [2, 1]], 2);
-    Airplane._assignAisleSeats();
+    Airplane._assignSeatsBy(Airplane._isAisleSeat);
     expect(Airplane.assignedSeats).toEqual([
       ["seat", 1, "aisle", 2, "seat", "aisle", "seat", "seat"]
     ]);
@@ -76,7 +76,7 @@ describe("Assign aisle seats", () => {
 describe("Assign window seats", () => {
   it("should return assigned window seats", () => {
     const Airplane = new AirplaneSeating([[3, 1], [2, 2]], 5);
-    Airplane._assignWindowSeats();
+    Airplane._assignSeatsBy(Airplane._isWindowSeat);
     expect(Airplane.assignedSeats).toEqual([
       [1, "seat", "seat", "aisle", "seat", 2],
       ["empty", "empty", "empty", "aisle", "seat", 3]
@@ -84,7 +84,7 @@ describe("Assign window seats", () => {
   });
   it("should return assigned window seats only for the number of passengers", () => {
     const Airplane = new AirplaneSeating([[2, 2], [2, 1], [2, 1]], 2);
-    Airplane._assignWindowSeats();
+    Airplane._assignSeatsBy(Airplane._isWindowSeat);
     expect(Airplane.assignedSeats).toEqual([
       [1, "seat", "aisle", "seat", "seat", "aisle", "seat", 2],
       ["seat", "seat", "aisle", "empty", "empty", "aisle", "empty", "empty"]
@@ -95,7 +95,7 @@ describe("Assign window seats", () => {
 describe("Assign middle seats", () => {
   it("should return assigned middle seats", () => {
     const Airplane = new AirplaneSeating([[3, 1], [2, 2]], 5);
-    Airplane._assignMiddleSeats();
+    Airplane._assignSeatsBy(Airplane._isMiddleSeat);
     expect(Airplane.assignedSeats).toEqual([
       ["seat", 1, "seat", "aisle", "seat", "seat"],
       ["empty", "empty", "empty", "aisle", "seat", "seat"]
@@ -103,7 +103,7 @@ describe("Assign middle seats", () => {
   });
   it("should return assigned middle seats only for the number of passengers", () => {
     const Airplane = new AirplaneSeating([[4, 1], [5, 1]], 2);
-    Airplane._assignMiddleSeats();
+    Airplane._assignSeatsBy(Airplane._isMiddleSeat);
     expect(Airplane.assignedSeats).toEqual([
       ["seat", 1, 2, "seat", "aisle", "seat", "seat", "seat", "seat", "seat"]
     ]);
@@ -132,7 +132,7 @@ describe("Assign all seats", () => {
 describe("Get auto assigned seats", () => {
   it("should return an object with assigned seats and remaining passengers", () => {
     const Airplane = new AirplaneSeating([[4, 1], [5, 1]], 5);
-    expect(Airplane.autoAssignedSeats).toEqual({
+    expect(Airplane.seatingData).toEqual({
       remainingPassengers: 0,
       seats: [[3, 5, "seat", 1, "aisle", 2, "seat", "seat", "seat", 4]]
     });

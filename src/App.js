@@ -17,7 +17,7 @@ class App extends Component {
 
   createNewPlane = (seats, passengers) => {
     const airplane = new AirplaneSeating(seats, passengers);
-    const seatingData = airplane.autoAssignedSeats;
+    const seatingData = airplane.seatingData;
     this.setState({ seatingData });
   };
 
