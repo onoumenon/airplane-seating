@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import {
   isNonNegativeInteger,
-  isValid2dArray
+  isValid2dArray,
+  isLessThan
 } from "../helpers/ValidationHelper";
 
 class InputForm extends Component {
@@ -23,13 +24,16 @@ class InputForm extends Component {
     event.preventDefault();
     const passengers = +this.state.formInput.passengers;
     const bracketsRegex = /(\[*\]*)/g;
-    const seats = this.state.formInput.seats.split("],[").map(ele => {
-      const arr = ele.replace(bracketsRegex, "").split(",");
-      return [+arr[0], +arr[1]];
-    });
-    if (this.formIsValid(seats, passengers)) {
-      this.props.createNewPlane(seats, passengers);
+    const seats = this.state.formInput.seats
+      .split(/\s*]\s*,\s*\[\s*/)
+      .map(ele => {
+        const arr = ele.replace(bracketsRegex, "").split(",");
+        return [+arr[0], +arr[1]];
+      });
+    if (!this.formIsValid(seats, passengers)) {
+      return;
     }
+    this.props.createNewPlane(seats, passengers);
     window.scrollTo(0, 0);
   };
 
@@ -38,8 +42,10 @@ class InputForm extends Component {
       this.setState({ error: "Passengers must be at least 0." });
       return false;
     }
-    if (!isValid2dArray(seats)) {
-      this.setState({ error: "Seats must be a valid array" });
+    if (!isValid2dArray(seats, isLessThan, 10)) {
+      this.setState({
+        error: "Seats must be a valid array with numbers below 10."
+      });
       return false;
     }
     this.setState({ error: null });
@@ -54,12 +60,13 @@ class InputForm extends Component {
           className="ui error form card centered"
         >
           <div className="content">
-            <div className="header">Create a Plane</div>
+            <div className="header">
+              <h2>Create a Plane</h2>
+            </div>
             <div className="description">
-              <h3>Seats assignment priority:</h3>
-              <ol>
-                <li>Aisle Seats</li> <li>Window Seats</li> <li>Middle Seats</li>
-              </ol>
+              Row and Col numbers must be below 10.
+              <h3>Seats assignment priority</h3>
+              <p>Aisle Seats</p> <p>Window Seats</p> <p>Middle Seats</p>
             </div>
           </div>
           <div className="field">
@@ -70,7 +77,7 @@ class InputForm extends Component {
               type="text"
               id="seats-input"
               name="seats"
-              placeholder="Array: [3,2],[2,2],[3,2]"
+              placeholder="Array: [3, 2], [4, 3], [2, 3], [3, 4]"
               required
             />
           </div>
@@ -82,7 +89,7 @@ class InputForm extends Component {
               type="number"
               id="passengers-input"
               name="passengers"
-              placeholder="Number of Passengers"
+              placeholder="No of Passengers: 30"
             />
           </div>
           {this.state.error && (
