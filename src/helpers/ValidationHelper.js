@@ -1,5 +1,5 @@
-export function isNonNegativeInteger(input) {
-  return Number.isInteger(input) && input >= 0;
+export function isNonNegativeSafeInteger(input) {
+  return Number.isSafeInteger(input) && input >= 0;
 }
 
 export function isLessThan(input, maxNum) {
@@ -17,7 +17,7 @@ export function isValid2dArray(input, optCondition, optConParam) {
   ) {
     return false;
   }
-  if (optCondition) {
+  if (optCondition && optConParam) {
     return input.every(
       arr =>
         arr.length === 2 &&
@@ -25,6 +25,7 @@ export function isValid2dArray(input, optCondition, optConParam) {
     );
   }
   return input.every(
-    arr => arr.length === 2 && arr.every(number => isNonNegativeInteger(number))
+    arr =>
+      arr.length === 2 && arr.every(number => isNonNegativeSafeInteger(number))
   );
 }

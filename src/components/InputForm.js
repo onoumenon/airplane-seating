@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  isNonNegativeInteger,
+  isNonNegativeSafeInteger,
   isValid2dArray,
   isLessThan
 } from "../helpers/ValidationHelper";
@@ -38,7 +38,7 @@ class InputForm extends Component {
   };
 
   formIsValid(seats, passengers) {
-    if (!isNonNegativeInteger(passengers)) {
+    if (!isNonNegativeSafeInteger(passengers)) {
       this.setState({ error: "Passengers must be at least 0." });
       return false;
     }

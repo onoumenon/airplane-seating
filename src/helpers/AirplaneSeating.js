@@ -1,4 +1,4 @@
-import { isValid2dArray, isNonNegativeInteger } from "./ValidationHelper";
+import { isValid2dArray, isNonNegativeSafeInteger } from "./ValidationHelper";
 
 export class AirplaneSeating {
   constructor(seats, passengers = 0) {
@@ -18,7 +18,7 @@ export class AirplaneSeating {
   }
 
   _createPassengers(input) {
-    if (!isNonNegativeInteger(input)) {
+    if (!isNonNegativeSafeInteger(input)) {
       throw new Error(
         "Invalid passenger input. Must be a non-negative number."
       );
