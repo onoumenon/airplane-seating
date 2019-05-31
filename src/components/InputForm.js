@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {
   isNonNegativeSafeInteger,
   isValid2dArray,
-  isLessThan
+  isRowsAndColsLessThan
 } from "../helpers/ValidationHelper";
 
 class InputForm extends Component {
@@ -42,9 +42,12 @@ class InputForm extends Component {
       this.setState({ error: "Passengers must be at least 0." });
       return false;
     }
-    if (!isValid2dArray(seats, isLessThan, 10)) {
+    if (
+      !isValid2dArray(seats, isRowsAndColsLessThan, 5, 100) ||
+      seats.length >= 5
+    ) {
       this.setState({
-        error: "Seats must be a valid array with numbers below 10."
+        error: "Seats must be a valid array according to above rules."
       });
       return false;
     }
@@ -64,7 +67,9 @@ class InputForm extends Component {
               <h2>Create a Plane</h2>
             </div>
             <div className="description">
-              Row and Col numbers must be below 10.
+              <p>For optimal display:</p>
+              <p>Row numbers and no of seat blocks must be below 5.</p>
+              <p>Col numbers must be below 100.</p>
               <h3>Seats assignment priority</h3>
               <p>Aisle Seats</p> <p>Window Seats</p> <p>Middle Seats</p>
             </div>
