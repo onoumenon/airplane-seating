@@ -39,4 +39,4 @@ Folder structure in `src`
 
 - `components` - front end React components
 - `helpers` - helper functions (validation, airplane seating algorithm)
-- `tests` - tests using Jest and react-testing-library (for both AirplaneSeating class and React components)
+- `tests` - tests using Jest and react-testing-library (for both helper functions and React components)

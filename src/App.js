@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ShowAirplaneSeats from "./components/ShowAirplaneSeats";
-import { AirplaneSeating } from "./helpers/AirplaneSeating";
+import AirplaneSeater from "./helpers/AirplaneSeater";
 import InputForm from "./components/InputForm";
 import { seats, passengers } from "./input/input";
 import "./App.css";
@@ -26,7 +26,7 @@ class App extends Component {
   };
 
   createNewPlane = (seats, passengers) => {
-    const airplane = new AirplaneSeating(seats, passengers);
+    const airplane = new AirplaneSeater(seats, passengers);
     const seatingData = airplane.seatingData;
     this.setState({ seatingData });
   };

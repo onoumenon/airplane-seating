@@ -2,7 +2,7 @@ import React from "react";
 import "jest-dom/extend-expect";
 import "react-testing-library/cleanup-after-each";
 import { render, fireEvent } from "react-testing-library";
-import InputForm from "./../components/InputForm";
+import InputForm from "../components/InputForm";
 
 const createNewPlane = jest.fn();
 const message = /Input Error/i;

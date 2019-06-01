@@ -2,7 +2,7 @@ import React from "react";
 import "jest-dom/extend-expect";
 import "react-testing-library/cleanup-after-each";
 import { render } from "react-testing-library";
-import Legend from "./../components/Legend";
+import Legend from "../components/Legend";
 
 describe("Display Legend", () => {
   it("should display the title of Legend", () => {

@@ -1,6 +1,6 @@
 import { isValid2dArray, isNonNegativeSafeInteger } from "./ValidationHelper";
 
-export class AirplaneSeating {
+export default class AirplaneSeater {
   constructor(seats, passengers = 0) {
     this.seats = this._createSeats(seats);
     this.passengers = this._createPassengers(passengers);
