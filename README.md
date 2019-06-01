@@ -1,5 +1,7 @@
 ## Airplane Seating Algorithm
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5b18a7c8-3e23-41d4-8098-361adee39ab3/deploy-status)](https://app.netlify.com/sites/airplane-seating/deploys)
+
 This project is done as part of a coding assignment
 
 Write a program that helps seat passengers in a flight based on the following input and rules:
